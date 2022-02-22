@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstacle
+  - Collectable
+  - BallPickup
+  - CubePickup
+  - PillPickup
+  - BounceSFXObstacle
   layers:
   - Default
   - TransparentFX

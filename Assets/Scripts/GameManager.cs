@@ -3,19 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    bool gameHasEnded = false;
-    public float restartDelay = 1f;
+    public float restartDelay = 1.5f;
+    bool isPaused = false;                  //Is Game paused
+    public GameObject completeLevelUI;      //Between level transition
+    bool gameHasEnded = false;              //Player hits an object
 
 
-    public GameObject completeLevelUI;
 
+    //What to do when completing the level
     public void CompleteLevel()
     {
+        //Display UI element between levels
         completeLevelUI.SetActive(true);
 
     }
 
-    public void endGame()
+    //What to do when hitting an obstacle
+    public void hitObstacle()
     {
         if (gameHasEnded == false)
         {
@@ -26,8 +30,41 @@ public class GameManager : MonoBehaviour
 
     }
 
+    //What to do when falling off
+    public void fallOff()
+    {
+        if (gameHasEnded == false)
+        {
+            gameHasEnded = true;
+            Debug.Log("GameOVer!!");
+            Invoke("Restart", restartDelay);
+        }
+
+    }
+
+    //Restart the Level
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    //Used to pause/unpause
+    private void Update()
+    {
+        //Pause/unpause the game
+        if (Input.GetKeyDown("escape"))
+        {
+            if (isPaused)
+            {
+                Time.timeScale = 1;
+                isPaused = !isPaused;
+
+            }
+            else
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+            }
+        }
+     }
 }
